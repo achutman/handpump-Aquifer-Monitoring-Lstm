@@ -2,6 +2,8 @@
 """
 Created on 29 Sep 2019
 
+Modules used in the other scripts related to data pre-processing, data preparation, and scoring.
+
 
 @author: Achut Manandhar
 Adapted from the following example:
@@ -33,6 +35,7 @@ def split_dataset(data,NdaysTrain,NhrBinsPerDay):
     test = array(split(test, len(test)/NhrBinsPerDay))
     return train, test
 
+# Standarsize dataset
 def standardize_dataset(train,test,NhrBinsPerDay):
     # flatten data
     train = train.reshape((train.shape[0]*train.shape[1], train.shape[2]))
@@ -66,6 +69,7 @@ def standardize_dataset(train,test,NhrBinsPerDay):
     
     return train, test, zmuv, zmuvY
 
+# Transform data into a format required for LSTM dataset
 def to_supervised(train, n_input):
 	# flatten data
 	data = train.reshape((train.shape[0]*train.shape[1], train.shape[2]))
