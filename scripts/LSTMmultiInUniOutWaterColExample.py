@@ -2,6 +2,8 @@
 """
 Created on 29 Sep 2019
 
+# Example script that trains and tests an LSTM model to estimate water column using handpump vibration data features.
+
 # cd to ...\handpumpWaterColEst\scripts folder 
 # define pathData = ...\handpumpWaterColEst\data
 # define pathSave = ...\handpumpWaterColEst\outputs
@@ -23,6 +25,7 @@ import matplotlib.pyplot as plt
 from keras.utils import plot_model
 #from keras.models import load_model
 
+# Plot training and validation loss
 def plot_train_valid_loss(modelHistory,pathSave,savePlot=False):
     fig1, ax1 = plt.subplots()
     ax1.plot(modelHistory.history['loss'])
@@ -36,6 +39,7 @@ def plot_train_valid_loss(modelHistory,pathSave,savePlot=False):
     if savePlot:
         fig1.savefig(os.path.join(pathSave,'lossTrainValid.png'),dpi=300)
 
+# Plot LSTM training, validation, and test estimates
 def plot_lstm_outputs(lstm_obj,model,train,test,zmuvY,pathSave,savePlot=False):  
     # Pred on train
     pred_train = lstm_obj.predict_model(model, train, train, NhrBinsPerDay) 
@@ -71,7 +75,7 @@ def plot_lstm_outputs(lstm_obj,model,train,test,zmuvY,pathSave,savePlot=False):
     if savePlot:
         fig2.savefig(os.path.join(pathSave,'waterColEstimates.png'),dpi=300)             
     
-
+# Pre-process data
 def preprocess_data(dataset):
     # Bin water column labels
     dataset['Ybin'] = waterColBinFun(dataset['waterColY'].values)
@@ -102,7 +106,7 @@ def preprocess_data(dataset):
     
     return train, test, zmuv, zmuvY, NhrBinsPerDay
     
-    
+# Test    
 def evaluate_model(train,test,NhrBinsPerDay,pathSave,savePlot=False):                  
     # Prepare data in LSTM format
     n_timesteps = 3
