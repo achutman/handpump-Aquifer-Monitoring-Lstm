@@ -2,6 +2,7 @@
 """
 Created on 29 Sep 2019
 
+Class definition of LSTM multi input unit output framework.
 
 @author: Achut Manandhar
 Adapted from the following example:
@@ -25,8 +26,19 @@ class LSTMmultiInUniOut(object):
     '''
     def __init__(self, n_input = 3, n_hid = 50, dropout = 0.2, validation_split = .2, loss_fn = 'mse', optimizer = 'Adam', learn_rate = .0001, L1L2 = [0.0,0.0001], batch_size = 10, n_epoch = 140, verbose = 1, shuffle = 0):
         '''
-        Initializes parameters for stacked denoising autoencoders
-        @param n_input: number of layers, i.e., number of autoencoders to stack on top of each other.
+        Initializes parameters for LSTM network. Most of these parameter choices defaults to stardard keras parameters.
+        n_input = number of time steps in the input sequence
+        n_hid = number of hidden nodes
+        dropout = dropout rate
+        validation_split = proportion of training data to be used for validation
+        loss_fn = loss function
+        optimizer = optimizer
+        L1L2 = L1, L2 regularization
+        learn_rate = learning rate
+        batch_size = batch size
+        n_epoch = number of epochs
+        verbose = verbose
+        shuffle = whether to shuffle during each epoch
 
         '''
         self.n_input = n_input                
@@ -71,7 +83,7 @@ class LSTMmultiInUniOut(object):
     #                             callbacks=[es]) 
         return modelHistory, model    
     
-    
+    # Predict using trained model
     def predict_model(self, model, train, test, NhrBinsPerDay):
         history = [x for x in train]
         # walk-forward validation over each day
